@@ -10,7 +10,6 @@ import {
 } from '@mui/material';
 import Logo from '../assets/images/logo.png';
 import MenuIcon from '@mui/icons-material/Menu';
-import AddMemberModal from '../Modal/AddmemberModal.jsx';
 import ProfileModal from '../Modal/ProfileModal.jsx';
 
 const Navbar = () => {
@@ -18,7 +17,6 @@ const Navbar = () => {
   const isMobile = useMediaQuery('(max-width:900px)');
   const navigate = useNavigate();
 
-  const [openAddMemberModal, setOpenAddMemberModal] = useState(false);
   const [openProfileModal, setOpenProfileModal] = useState(false);
 
   const isLoggedIn = sessionStorage.getItem('isLogin') === 'true';
@@ -36,7 +34,6 @@ const Navbar = () => {
   const loggedInNavItems = [
       { text: 'Profile', action: () => setOpenProfileModal(true) },
        { text: 'Dashboard', link : '/dashboard' },
-           { text: 'Add Member', action: () => setOpenAddMemberModal(true) },
             { text: 'Fee Stats', link : '/user' },
     { text: 'Logout', action: handleLogout },
    
@@ -174,10 +171,6 @@ const Navbar = () => {
       </Stack>
 
       {/* Modals */}
-      <AddMemberModal
-        open={openAddMemberModal}
-        handleClose={() => setOpenAddMemberModal(false)}
-      />
       <ProfileModal
         open={openProfileModal}
         handleClose={() => setOpenProfileModal(false)}

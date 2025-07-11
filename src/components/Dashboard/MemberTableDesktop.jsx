@@ -6,7 +6,8 @@ import {
   Typography,
   Button,
   IconButton,
-    keyframes,
+  keyframes,
+  InputBase,
 } from '@mui/material';
 import { DataGrid } from '@mui/x-data-grid';
 import { dummydata } from '../../data/dummy';
@@ -17,8 +18,7 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UndoIcon from '@mui/icons-material/Undo';
 import SearchIcon from '@mui/icons-material/Search';
 import dayjs from 'dayjs';
-import InputBase from '@mui/material/InputBase';
-
+import AddMemberModal from '../../Modal/AddmemberModal';
 
 const fadeIn = keyframes`
   from { opacity: 0; transform: translateY(20px); }
@@ -30,8 +30,8 @@ const MemberTableDesktop = () => {
   const [filterStatus, setFilterStatus] = React.useState('All');
   const [searchTerm, setSearchTerm] = React.useState('');
   const [previousStates, setPreviousStates] = React.useState({});
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
-  // Automatically update unpaid status if one month passed since lastPaidDate
   React.useEffect(() => {
     const updated = data.map((member) => {
       if (member.status === 'Paid' && member.lastPaidDate) {
@@ -58,14 +58,13 @@ const MemberTableDesktop = () => {
   const handleFilterChange = (e) => setFilterStatus(e.target.value);
 
   const filteredRows = data
-  .filter((member) =>
-    filterStatus === 'All' ? true : member.status === filterStatus
-  )
-  .filter((member) =>
-    member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    member.phone.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+    .filter((member) =>
+      filterStatus === 'All' ? true : member.status === filterStatus
+    )
+    .filter((member) =>
+      member.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      member.phone.toLowerCase().includes(searchTerm.toLowerCase())
+    );
 
   const handleMarkAsPaid = (id) => {
     const prevData = data.find((member) => member.id === id);
@@ -109,27 +108,36 @@ const MemberTableDesktop = () => {
     setData(updatedData);
   };
 
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  const handleAddMember = (newMember) => {
+    setData((prev) => [...prev, { ...newMember, id: Date.now() }]);
+    handleCloseModal();
+  };
+
   const columns = [
-    { field: 'id', headerName: 'Roll No.', width: 100 },
+    { field: 'id', headerName: 'Roll No.', width: 100 ,sortable: false},
     {
       field: 'name',
       headerName: 'Name',
       flex: 1,
       cellClassName: 'name-column--cell',
+      sortable: false,
     },
-    { field: 'phone', headerName: 'Contact Details', flex: 1 },
+    { field: 'phone', headerName: 'Contact Details', flex: 1,sortable: false, },
     {
       field: 'status',
       headerName: 'Status',
       flex: 1,
+      sortable: false,
       renderCell: ({ row: { status } }) => (
         <Box
           display="flex"
           justifyContent="center"
           alignItems="center"
           py="5px"
-          px="10px" 
-          
+          px="10px"
           fontWeight="bold"
           color="#fff"
           sx={{
@@ -174,7 +182,7 @@ const MemberTableDesktop = () => {
             <Button
               size="small"
               onClick={() => handleUndoMarkAsPaid(row.id)}
-              startIcon={<UndoIcon/>}
+              startIcon={<UndoIcon />}
               sx={{
                 color: 'white',
                 borderColor: '#fbc02d',
@@ -192,8 +200,8 @@ const MemberTableDesktop = () => {
         </Box>
       ),
     },
-    { field: 'lastPaidDate', headerName: 'Last Paid', flex: 1 },
-    { field: 'unpaidFor', headerName: 'Unpaid (Months)', flex: 1 },
+    { field: 'lastPaidDate', headerName: 'Last Paid', flex: 1,sortable: false, },
+    { field: 'unpaidFor', headerName: 'Unpaid (Months)', flex: 1,sortable: false, },
     {
       field: 'delete',
       headerName: 'Delete Member',
@@ -224,48 +232,75 @@ const MemberTableDesktop = () => {
         padding: 2,
         animation: `${fadeIn} 0.3s ease-out`,
       }}
-    ><Box
-  display="flex"
-  justifyContent="space-between"
-  alignItems="center"
-  mb={2}
-  flexWrap="wrap"
-  gap={2}
->
-  <Box display="flex" alignItems="center" gap={2}>
-    <Typography variant="body1" fontWeight={500} color="white">
-      Filter by Status:
-    </Typography>
-    <Select
-      value={filterStatus}
-      onChange={handleFilterChange}
-      size="small"
-      sx={{
-        backgroundColor: '#b8aeae',
-        color: 'black',
-        borderRadius: 1,
-        fontWeight: 500,
-        minWidth: 120,
-        '& .MuiSelect-icon': { color: 'black' },
-      }}
     >
-      <MenuItem value="All">All</MenuItem>
-      <MenuItem value="Paid">Paid</MenuItem>
-      <MenuItem value="Unpaid">Unpaid</MenuItem>
-    </Select>
-  </Box>
+      <Box
+        display="flex"
+        justifyContent="space-between"
+        alignItems="center"
+        flexWrap="wrap"
+        mb={2}
+        gap={2}
+      >
+        <Box display="flex" alignItems="center" gap={2}>
+          <Typography variant="body1" fontWeight={500} color="white">
+            Filter by Status:
+          </Typography>
+          <Select
+            value={filterStatus}
+            onChange={handleFilterChange}
+            size="small"
+            sx={{
+              backgroundColor: '#b8aeae',
+              color: 'black',
+              borderRadius: 1,
+              fontWeight: 500,
+              minWidth: 120,
+              '& .MuiSelect-icon': { color: 'black' },
+            }}
+          >
+            <MenuItem value="All">All</MenuItem>
+            <MenuItem value="Paid">Paid</MenuItem>
+            <MenuItem value="Unpaid">Unpaid</MenuItem>
+          </Select>
+        </Box>
 
-  {/*Search Bar */}
-<Box display="flex" backgroundColor="#b8aeae" borderRadius="3px" px={1} alignItems="center">
-        <InputBase sx={{ ml: 1, flex: 1 }} type="text"
-      placeholder="Search by name or phone"
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)} />
-        <IconButton type="button">
-          <SearchIcon />
-        </IconButton>
+        <Box display="flex" gap={2} alignItems="center">
+          <Box
+            display="flex"
+            backgroundColor="#b8aeae"
+            borderRadius="3px"
+            px={1}
+            alignItems="center"
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              type="text"
+              placeholder="Search by name or phone"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <IconButton type="button">
+              <SearchIcon />
+            </IconButton>
+          </Box>
+
+          <Button
+            variant="contained"
+            onClick={handleOpenModal}
+            sx={{
+              backgroundColor: '#2196f3',
+              color: 'white',
+              textTransform: 'none',
+              fontWeight: 'bold',
+              '&:hover': {
+                backgroundColor: '#1976d2',
+              },
+            }}
+          >
+            + Add Member
+          </Button>
+        </Box>
       </Box>
-</Box>
 
       <DataGrid
         rows={filteredRows}
@@ -273,9 +308,9 @@ const MemberTableDesktop = () => {
         pageSize={10}
         rowsPerPageOptions={[5]}
         checkboxSelection={false}
-        disableColumnResize={true}
-        sortingOrder={[]}
+        disableColumnResize
         disableSelectionOnClick
+        disableColumnMenu
         sx={{
           height: '500px',
           background: 'linear-gradient(to right, #000000, #1a1a1a)',
@@ -283,16 +318,8 @@ const MemberTableDesktop = () => {
           border: 'none',
           fontSize: '14px',
           borderRadius: '20px',
-
-          '& .MuiDataGrid-root': {
-            border: 'none',
-          },
-          '& .MuiDataGrid-cell': {
-            border: 'none',
-          },
-          '& .name-column--cell': {
-            color: 'red',
-          },
+          '& .MuiDataGrid-cell': { border: 'none' },
+          '& .name-column--cell': { color: 'red' },
           '& .MuiDataGrid-columnHeaderTitle': {
             color: '#787474',
             fontWeight: 'bold',
@@ -310,25 +337,33 @@ const MemberTableDesktop = () => {
             backgroundColor: '#1a1a1a',
             color: 'white',
           },
-          '& .MuiDataGrid-row.Mui-selected:hover': {
-            backgroundColor: '#1a1a1a',
-          },
           '& .MuiDataGrid-footerContainer': {
+
             color: 'white',
             background: 'linear-gradient(to right, #000000, #1a1a1a)',
             border: 'none',
           },
-          '& .MuiDataGrid-virtualScroller::-webkit-scrollbar-thumb': {
-            borderRadius: '20px',
-          },
-          '& .MuiTablePagination-root': {
+                    '& .MuiDataGrid-row.Mui-selected:hover': {
+            backgroundColor: '#1a1a1a',
+            border:'none'
+          },         
+           '& .MuiTablePagination-root': {
             color: 'white',
           },
           '& .MuiSvgIcon-root': {
             color: 'white',
             fill: 'white',
           },
+
+
         }}
+      />
+
+      {/* Modal */}
+      <AddMemberModal
+        open={isModalOpen}
+        handleClose={handleCloseModal}
+        onAdd={handleAddMember}
       />
     </Box>
   );

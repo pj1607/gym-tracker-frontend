@@ -19,12 +19,14 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UndoIcon from '@mui/icons-material/Undo';
 import SearchIcon from '@mui/icons-material/Search';
 import dayjs from 'dayjs';
+import AddMemberModal from '../../Modal/AddmemberModal';
 
 const MemberTableMobile = () => {
   const [data, setData] = React.useState(dummydata);
   const [filterStatus, setFilterStatus] = React.useState('All');
   const [searchTerm, setSearchTerm] = React.useState('');
   const [previousStates, setPreviousStates] = React.useState({});
+  const [isModalOpen, setIsModalOpen] = React.useState(false);
 
   React.useEffect(() => {
     const updated = data.map((member) => {
@@ -73,6 +75,14 @@ const MemberTableMobile = () => {
     setData(updated);
   };
 
+  const handleOpenModal = () => setIsModalOpen(true);
+  const handleCloseModal = () => setIsModalOpen(false);
+
+  const handleAddMember = (newMember) => {
+    setData((prev) => [...prev, { ...newMember, id: Date.now() }]);
+    handleCloseModal();
+  };
+
   const filteredRows = data
     .filter((m) => (filterStatus === 'All' ? true : m.status === filterStatus))
     .filter(
@@ -83,43 +93,70 @@ const MemberTableMobile = () => {
 
   return (
     <Box p={2}>
-      <Box display="flex" flexWrap="wrap" gap={2} alignItems="center" mb={3}>
-        <Typography color="white">Filter by Status:</Typography>
-        <Select
-          value={filterStatus}
-          onChange={(e) => setFilterStatus(e.target.value)}
-          size="small"
-          sx={{ backgroundColor: '#b8aeae', minWidth: 120 }}
-        >
-          <MenuItem value="All">All</MenuItem>
-          <MenuItem value="Paid">Paid</MenuItem>
-          <MenuItem value="Unpaid">Unpaid</MenuItem>
-        </Select>
+      <Box
+        display="flex"
+        flexWrap="wrap"
+        gap={2}
+        alignItems="center"
+        justifyContent="space-between"
+        mb={3}
+      >
+        <Box display="flex" gap={2} flexWrap="wrap" alignItems="center">
+          <Typography color="white">Filter by Status:</Typography>
+          <Select
+            value={filterStatus}
+            onChange={(e) => setFilterStatus(e.target.value)}
+            size="small"
+            sx={{ backgroundColor: '#b8aeae', minWidth: 120 }}
+          >
+            <MenuItem value="All">All</MenuItem>
+            <MenuItem value="Paid">Paid</MenuItem>
+            <MenuItem value="Unpaid">Unpaid</MenuItem>
+          </Select>
 
-        <Box
-          display="flex"
-          backgroundColor="#b8aeae"
-          borderRadius="3px"
-          px={1}
-          alignItems="center"
-        >
-          <InputBase
-            sx={{ ml: 1, flex: 1 }}
-            placeholder="Search by name or phone"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <IconButton type="button">
-            <SearchIcon />
-          </IconButton>
+          <Box
+            display="flex"
+            backgroundColor="#b8aeae"
+            borderRadius="3px"
+            px={1}
+            alignItems="center"
+          >
+            <InputBase
+              sx={{ ml: 1, flex: 1 }}
+              placeholder="Search by name or phone"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <IconButton type="button">
+              <SearchIcon />
+            </IconButton>
+          </Box>
         </Box>
+
+        {/* Add Member Button */}
+        <Button
+          variant="contained"
+          onClick={handleOpenModal}
+          sx={{
+            backgroundColor: '#2196f3',
+            color: 'white',
+            textTransform: 'none',
+            fontWeight: 'bold',
+            mt: { xs: 1, sm: 0 },
+            whiteSpace: 'nowrap',
+          }}
+        >
+          + Add Member
+        </Button>
       </Box>
 
       <Box display="flex" flexDirection="column" gap={2}>
         {filteredRows.map((row) => (
           <Card key={row.id} sx={{ backgroundColor: '#1e1e1e', color: 'white' }}>
             <CardContent>
-              <Typography fontWeight="bold">{row.id} -  {row.name}</Typography>
+              <Typography fontWeight="bold">
+                {row.id} - {row.name}
+              </Typography>
               <Typography variant="body2">📞 {row.phone}</Typography>
               <Typography variant="body2">
                 💰 Status:{' '}
@@ -155,7 +192,7 @@ const MemberTableMobile = () => {
                     size="small"
                     onClick={() => handleUndo(row.id)}
                     startIcon={<UndoIcon />}
-                    sx={{ color: 'white'}}
+                    sx={{ color: 'white' }}
                   >
                     Undo
                   </Button>
@@ -165,9 +202,7 @@ const MemberTableMobile = () => {
                   size="small"
                   onClick={() => handleDelete(row.id)}
                   startIcon={<DeleteForeverIcon />}
-                  sx={{
-                    color: 'white',
-                  }}
+                  sx={{ color: 'white' }}
                 >
                   Delete
                 </Button>
@@ -176,6 +211,13 @@ const MemberTableMobile = () => {
           </Card>
         ))}
       </Box>
+
+      {/* Add Member Modal */}
+      <AddMemberModal
+        open={isModalOpen}
+        handleClose={handleCloseModal}
+        onAdd={handleAddMember}
+      />
     </Box>
   );
 };
