@@ -43,17 +43,17 @@ const AddMemberModal = ({ open, handleClose, onAdd }) => {
     <Modal open={open} onClose={handleClose}>
       <Box
         sx={{
-          position: 'absolute',
-          top: '50%',
-          left: '50%',
-          transform: 'translate(-50%, -50%)',
-          width: 400,
-          bgcolor: '#1a1a1a',
-          boxShadow: 24,
-          borderRadius: 2,
-          p: 4,
-          color: '#fff',
-          transition: 'all 0.3s ease-in-out',
+            position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: { xs: '80%', sm: '450px', md: '600px' }, 
+     p: { xs: 2, sm: 3, md: 4 }, 
+    bgcolor: '#1a1a1a',
+    boxShadow: 24,
+    borderRadius: 2,
+    color: '#fff',
+    transition: 'all 0.3s ease-in-out',
         }}
       >
         {/* Close button */}

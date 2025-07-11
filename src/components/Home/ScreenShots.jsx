@@ -34,7 +34,7 @@ const ScreenShots = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card
             sx={{
-              width:"300px",
+              maxWidth:{ xs:'250px',sm:'300px'},
               background: 'linear-gradient(to right, #000000, #1a1a1a )',
               borderRadius: 3,
               overflow: 'hidden',
@@ -78,7 +78,7 @@ const ScreenShots = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card
             sx={{
-               width:"500px",
+               maxWidth:{ xs:'400px',sm:'500px'},
               background: 'linear-gradient(to right, #000000, #1a1a1a )',
               borderRadius: 3,
               overflow: 'hidden',
@@ -122,7 +122,7 @@ const ScreenShots = () => {
         <Grid item xs={12} sm={6} md={4}>
           <Card
             sx={{
-               width:"500px",
+               maxWidth:{ xs:'400px',sm:'500px'},
               background: 'linear-gradient(to right, #000000, #1a1a1a )',
               borderRadius: 3,
               overflow: 'hidden',
