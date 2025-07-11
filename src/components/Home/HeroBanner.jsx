@@ -12,9 +12,9 @@ const HeroWithSteps = () => {
     <Box
       sx={{
         display: 'flex',
-        flexDirection: { xs: 'column', md: 'row' },
+        flexDirection: { xs: 'column', xl: 'row' },
         height: '100vh',
-        width: '107%',
+        width: '100%',
         overflow: 'hidden',
       }}
     >
