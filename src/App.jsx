@@ -8,6 +8,7 @@ import User from './Pages/Userpage.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
 import CssBaseline from '@mui/material/CssBaseline';
+
 import './style.css';
 
 export const App = () => {
@@ -18,13 +19,21 @@ export const App = () => {
         sx={{
           minHeight: '100vh',
           display: 'flex',
-              flexDirection: 'column',
-        
+          flexDirection: 'column',
         }}
       >
         <Navbar />
 
-        <Box sx={{ flex: 1, width: '100%', maxWidth: '1488px', mx: 'auto' }}>
+        {/* Full-width page content */}
+        <Box
+          sx={{
+            flex: 1,
+            width: '100vw',
+            marginLeft: 'calc(-50vw + 50%)',
+            marginRight: 'calc(-50vw + 50%)',
+            padding: 0,
+          }}
+        >
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/dashboard" element={<Dashboard />} />
