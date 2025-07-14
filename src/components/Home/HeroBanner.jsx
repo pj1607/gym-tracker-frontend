@@ -81,7 +81,7 @@ const HeroWithSteps = () => {
         <Box sx={{ flex: 1, backgroundColor: '#8B0000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Stack alignItems="center" textAlign="center" spacing={1}
             sx={{
-              maxWidth:{ xs:'110px',sm:'220px'},
+              maxWidth:{ xs:'125px',sm:'250px'},
               backgroundColor: '#1a1a1a',
               borderRadius: '12px',
               p: 3,
@@ -94,9 +94,28 @@ const HeroWithSteps = () => {
             }}>
             <PersonAddAltIcon fontSize="large" color="error" />
             <Typography fontWeight="600" color='white'>1. Add Members</Typography>
-            <Typography variant="body2"  sx={{ color: '#ccc' }}>
-              Enter member details and start tracking .
-            </Typography>
+           <Typography
+  variant="body2"
+  sx={{
+    color: '#ccc',
+    lineHeight: 1.6,
+    display: { xs: 'block', sm: 'none' }
+  }}
+>
+ Create a member profile.
+</Typography>
+<Typography
+  variant="body2"
+  sx={{
+    color: '#ccc',
+    fontSize: '14px',
+    lineHeight: 1.6,
+    display: { xs: 'none', sm: 'block' }
+  }}
+>
+  Enter member details and start tracking.
+</Typography>
+
           </Stack>
         </Box>
 
@@ -104,7 +123,7 @@ const HeroWithSteps = () => {
         <Box sx={{ flex: 1, backgroundColor: '#1a1a1a ', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Stack alignItems="center" textAlign="center" spacing={1}
             sx={{
-             maxWidth:{ xs:'110px',sm:'220px'},
+             maxWidth:{ xs:'125px',sm:'250px'},
               backgroundColor: '#1a1a1a',
               borderRadius: '12px',
               p: 3,
@@ -117,9 +136,28 @@ const HeroWithSteps = () => {
             }}>
             <CheckCircleOutlineIcon fontSize="large" color="error" />
             <Typography fontWeight="600" color='white'>2. Mark Payments</Typography>
-            <Typography variant="body2" sx={{ color: '#ccc' }}>
-              Mark who has paid and who hasn't — instantly.
-            </Typography>
+            <Typography
+  variant="body2"
+  sx={{
+    color: '#ccc',
+    lineHeight: 1.6,
+    display: { xs: 'block', sm: 'none' }
+  }}
+>
+ Mark members as paid.
+</Typography>
+<Typography
+  variant="body2"
+  sx={{
+    color: '#ccc',
+    fontSize: '14px',
+    lineHeight: 1.6,
+    display: { xs: 'none', sm: 'block' }
+  }}
+>
+  Mark who has paid and who hasn't — instantly.
+</Typography>
+
           </Stack>
         </Box>
 
@@ -127,7 +165,7 @@ const HeroWithSteps = () => {
         <Box sx={{ flex: 1, backgroundColor: '#000000', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <Stack alignItems="center" textAlign="center" spacing={1}
             sx={{
-           maxWidth:{ xs:'110px',sm:'220px'},
+           maxWidth:{ xs:'125px',sm:'250px'},
               backgroundColor: '#1a1a1a',
               borderRadius: '12px',
               p: 3,
@@ -140,9 +178,28 @@ const HeroWithSteps = () => {
             }}>
             <InsightsIcon fontSize="large" color="error" />
             <Typography fontWeight="600" color='white'>3. Stay Informed</Typography>
-            <Typography variant="body2" sx={{ color: '#ccc' }}>
-              Get a clear view of payment status.
-            </Typography>
+            <Typography
+  variant="body2"
+  sx={{
+    color: '#ccc',
+    lineHeight: 1.6,
+    display: { xs: 'block', sm: 'none' }
+  }}
+>
+  	  See who hasn’t paid.&nbsp;
+</Typography>
+<Typography
+  variant="body2"
+  sx={{
+    color: '#ccc',
+    fontSize: '14px',
+    lineHeight: 1.6,
+    display: { xs: 'none', sm: 'block' }
+  }}
+>
+  Get a clear view of payment status.
+</Typography>
+
           </Stack>
         </Box>
       </Box>
