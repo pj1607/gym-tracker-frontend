@@ -18,7 +18,7 @@ const Footer = () => {
       <Box display="flex" justifyContent="center" alignItems="center" gap={1}>
         <img src={pjLogo} alt="PJ Logo" width="18" height="18" style={{ borderRadius: '10px' }} />
         <Typography variant="body 5" sx={{ fontWeight: 100 }}>
-          © 2025 <strong>PJ</strong>. All rights reserved.
+          2025 <strong>PJ</strong>
         </Typography>
       </Box>
     </Box>
