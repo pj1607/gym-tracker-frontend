@@ -1,12 +1,33 @@
-# React + Vite
+# Gym Fee Tracker
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Full-stack web app to manage gym memberships, automate monthly fee tracking, and streamline member payment statuses.
 
-Currently, two official plugins are available:
+## 🔍 Features
+- 📝 Member registration
+- 📅 Automatic monthly fee updates
+- 💰 Fee status tracking (e.g., “2 months unpaid”)
+- ✅ Mark as paid / ❌ Delete / 🔁 Undo
+- 📦 Persistent data storage with MongoDB
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 📸 Preview
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+![App Screenshot](src/assets/images/gym-fee-tracker-preview.png)
+
+
+---
+
+## 🔗 Live Demo
+
+[Click here to try it out](https://gym-tracker-frontend-eight.vercel.app)
+
+---
+
+## 🛠️ Tech Stack
+
+- React.js
+- Material UI
+- Node.js
+- Express.js
+- MongoDB
